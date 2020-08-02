@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoshu.dao.ContentMapper">
+  <resultMap id="BaseResultMap" type="com.xiaoshu.entity.Content">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="contentid" jdbcType="INTEGER" property="contentid" />
+    <result column="contentcategoryid" jdbcType="INTEGER" property="contentcategoryid" />
+    <result column="contenttitle" jdbcType="VARCHAR" property="contenttitle" />
+    <result column="contenturl" jdbcType="VARCHAR" property="contenturl" />
+    <result column="picpath" jdbcType="VARCHAR" property="picpath" />
+    <result column="price" jdbcType="VARCHAR" property="price" />
+    <result column="staus" jdbcType="VARCHAR" property="staus" />
+    <result column="createtime" jdbcType="DATE" property="createtime" />
+  </resultMap>
+  
+  <select id="findPage" parameterType="content" resultType="content">
+  	select c.*,g.* from content c,contentcategory g
+  	<where>
+  		c.contentcategoryid = g.contentcategoryid
+  		<if test="contenttitle!=null and contenttitle!=''">
+  			and c.contenttitle like '%${contenttitle}%'
+  		</if>
+  		<if test="contentcategoryid!=null and contentcategoryid!=0">
+  				and c.contentcategoryid=#{contentcategoryid}
+  		</if>
+  	</where>
+  </select>
+</mapper>
