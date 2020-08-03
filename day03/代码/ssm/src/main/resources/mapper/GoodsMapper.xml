@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoshu.dao.GoodsMapper">
+  <resultMap id="BaseResultMap" type="com.xiaoshu.entity.Goods">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="g_id" jdbcType="INTEGER" property="gId" />
+    <result column="t_id" jdbcType="INTEGER" property="tId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="price" jdbcType="VARCHAR" property="price" />
+    <result column="createtime" jdbcType="DATE" property="createtime" />
+  </resultMap>
+   <select id="findPage" parameterType="goods" resultType="goods">
+ 	select g.*,t.* from tb_goods g,tb_goodstype t
+ 	<where>
+ 			g.t_id=t.t_id
+ 		<if test="start!=null">
+ 			and g.createtime  &gt;= #{start}
+ 		</if>
+ 		<if test="end!=null">
+ 			and g.createtime  &lt;= #{end}
+ 		</if>
+ 	</where>
+ </select>
+</mapper>
