@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoshu.dao.StuMapper">
+  <resultMap id="BaseResultMap" type="com.xiaoshu.entity.Stu">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="sdid" jdbcType="INTEGER" property="sdid" />
+    <result column="sdname" jdbcType="VARCHAR" property="sdname" />
+    <result column="sdsex" jdbcType="VARCHAR" property="sdsex" />
+    <result column="sdhobby" jdbcType="VARCHAR" property="sdhobby" />
+    <result column="sdbirth" jdbcType="DATE" property="sdbirth" />
+    <result column="mid" jdbcType="INTEGER" property="mid" />
+  </resultMap>
+  <select id="findPage" resultType="stu" parameterType="stu">
+ 	SELECT s.*,m.* FROM tb_stu_day s,tb_major_day m 
+ 	<where>
+ 		s.mid=m.mdid
+ 		<if test="sdname!=null and sdname!=''">
+ 			and s.sdname like '%${sdname}%'
+ 		</if>
+		<if test="mid!=null and mid!=0">
+ 			and s.mid=#{mid}
+ 		</if>
+ 		<if test="start!=null">
+ 			and s.sdbirth  &gt;= #{start}
+ 		</if>
+ 		<if test="end!=null">
+ 			and s.sdbirth  &lt;= #{end}
+ 		</if>
+ 	</where>
+ </select>
+</mapper>
