@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoshu.dao.StuMapper">
+  <resultMap id="BaseResultMap" type="com.xiaoshu.entity.Stu">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="s_id" jdbcType="INTEGER" property="sId" />
+    <result column="s_name" jdbcType="VARCHAR" property="sName" />
+    <result column="s_sex" jdbcType="VARCHAR" property="sSex" />
+    <result column="s_hobby" jdbcType="VARCHAR" property="sHobby" />
+    <result column="s_birth" jdbcType="DATE" property="sBirth" />
+    <result column="m_id" jdbcType="INTEGER" property="mId" />
+  </resultMap>
+	<select id="findPage" parameterType="stuVo" resultType="stuVo">
+		select s.*,m.m_name as mname from stu_tb s,major_tb m
+		<where>
+			s.m_id = m.m_id
+			<if test="sName!=null and sName!=''">
+				and s.s_name like '%${sName}%'
+			</if>
+			<if test="mId!=null and mId!=0">
+				and s.m_id =#{mId}
+			</if>
+			<if test="start!=null">
+				and s.s_birth &gt;=#{start}
+			</if>
+			<if test="end!=null ">
+				and s.s_birth &lt;=#{end}
+			</if>
+		</where>
+	</select>
+	<select id="getEcharts" resultType="stuVo">
+		SELECT  COUNT(s.s_id) AS num,m.m_name AS mname FROM stu_tb s,major_tb m WHERE s.m_id = m.m_id GROUP BY m.m_name
+
+	</select>
+</mapper>
